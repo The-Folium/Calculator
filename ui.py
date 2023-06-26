@@ -47,7 +47,7 @@ class UI:
         conversation_text.configure(state='disabled')
 
         # Create input field
-        entry = tk.Entry(root, width=60)
+        entry = ttk.Entry(root, width=60)
         entry.bind("<Return>", lambda event: process_input())  # Bind "Return" key to process input
         entry.pack(pady=10)
 
