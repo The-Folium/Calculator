@@ -12,10 +12,7 @@ class Expression:
         #
         #         line = self.line
         #         self.line = line[:function_pos-1]+'math.'+line[function_pos-1:]
-        while function_pos:=self.line.find("log(") != -1:
-            line = self.line
-            self.line = line[:function_pos+2]+'10'+line[function_pos+2:]
-        # print(self.line)
+
         try:
             result = str(round(eval(self.line), 12))
         except ZeroDivisionError:
