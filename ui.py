@@ -21,8 +21,16 @@ class UI:
             entry.delete(0, tk.END)  # Clear the input field
             conversation_text.yview(tk.END)  # Automatically scroll to the end
 
+        def add_symbol(symbol):
+            if symbol == "=":
+                process_input()
+            else:
+                entry.insert(tk.END, symbol)
+            entry.focus_set()  # Return focus to the entry line
+
         root = tk.Tk()
-        root.title("Console-like Application")
+        root.title("Calculator")
+        # root.resizable(False, False)  # Lock window size
 
         # Create conversation display
         conversation_frame = ttk.Frame(root)
@@ -39,12 +47,39 @@ class UI:
         conversation_text.configure(state='disabled')
 
         # Create input field
-        entry = tk.Entry(root, width=50)
+        entry = tk.Entry(root, width=60)
         entry.bind("<Return>", lambda event: process_input())  # Bind "Return" key to process input
-        entry.pack()
+        entry.pack(pady=10)
 
-        # Create Enter button
-        button = tk.Button(root, text="Enter", command=process_input)
-        button.pack()
+
+        # Create calculator keyboard
+        keyboard_frame = ttk.Frame(root)
+        keyboard_frame.pack(side=tk.LEFT, padx=10)
+
+        buttons = [
+            '7', '8', '9', '/',
+            '4', '5', '6', '*',
+            '1', '2', '3', '-',
+            '0', '.', '=', '+'
+        ]
+
+        for i, button in enumerate(buttons):
+            btn = ttk.Button(keyboard_frame, text=button, width=6, command=lambda symbol=button: add_symbol(symbol))
+            btn.grid(row=i // 4, column=i % 4)
+
+        # Create function keyboard
+        function_frame = ttk.Frame(root)
+        function_frame.pack(side=tk.RIGHT, padx=10)
+
+        buttons = [
+            'sin', 'cos', 'tan',
+            'asin', 'acos', 'atan',
+            'sqrt', 'log', 'exp',
+            '(', ')', 'pi'
+        ]
+
+        for i, button in enumerate(buttons):
+            btn = ttk.Button(function_frame, text=button, width=10, command=lambda symbol=button: add_symbol(symbol))
+            btn.grid(row=i // 3, column=i % 3)
 
         root.mainloop()
